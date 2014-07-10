@@ -69,8 +69,28 @@ class Enumerable <T> : Generator, Sequence {
     )
   }
 
+  // reduce
+  func reduce (operation: (T,T) -> T) -> T! {
+    var v = self.closure()
+    if v {
+      while let x = self.closure() {
+        v = operation(v!, x)
+      }
+    }
+    return v
+  }
+
+  // reduce with initital value
+  func reduce<V> (initValue:V, operation: (V,T) -> V) -> V {
+    var v = initValue
+    while let x = self.closure() {
+      v = operation(v, x)
+    }
+    return v
+  }
+
   func toArray () -> Array<T> {
-    var arr = T[]()
+    var arr = [T]()
     while let x = self.closure() {
       arr.append(x)
     }

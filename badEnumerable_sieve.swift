@@ -1,6 +1,6 @@
 import BadEnumerable
 
-var x = enumerableFromSequence(1..0)
+var x = enumerableFromSequence(1...Int.max)
 println(x.filter{$0 % 2 == 0}.map{$0 * 3}.take(5).toArray())
 
 struct BE_SieveGenerator <U: Generator where U.Element == Int> : Generator {
@@ -24,7 +24,7 @@ struct BE_SieveGenerator <U: Generator where U.Element == Int> : Generator {
 }
 
 
-var primes = BEnumerable(generator: BE_SieveGenerator(list: (2..1).generate()))
+var primes = BEnumerable(generator: BE_SieveGenerator(list: (2...Int.max).generate()))
 // println(primes.take(10).toArray())
 println(primes.next())
 

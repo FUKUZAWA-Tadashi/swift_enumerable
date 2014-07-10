@@ -52,7 +52,7 @@ struct BE_TakeGenerator <G: Generator> : Generator {
 
 
 class BEnumerable <G: Generator> : Generator {
-  var wrappedGen: G[]
+  var wrappedGen: [G]
   var generator: G {
     get { return wrappedGen[0] }
     set { wrappedGen[0] = newValue }

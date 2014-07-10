@@ -39,6 +39,19 @@ y.map{"'\($0)'"}.each {
 
 
 
+/*
+** sample of reduce()
+*/
+
+var r = Enumerable(sequence: 1...10)
+println(r.reduce(+))
+//=> 55
+
+var r2 = Enumerable(sequence: 3...5)
+println(r2.reduce(2, *))
+//=> 120
+
+
 
 /*
 ** Enumerable is also a Sequence
