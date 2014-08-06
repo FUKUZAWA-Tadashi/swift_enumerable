@@ -1,34 +1,34 @@
-class Enumerable <T> : Generator, Sequence {
+public class Enumerable <T> : GeneratorType, SequenceType {
 
-  var closure : () -> T?
+  private var closure : () -> T?
 
-  init (worker: () -> T?) {
+  public init (worker: () -> T?) {
     self.closure = worker
   }
 
   // construct from Generator
-  convenience init <G: Generator where G.Element == T> (generator: G) {
+  public convenience init <G: GeneratorType where G.Element == T> (generator: G) {
     var gen = generator
     self.init(worker: ({ return gen.next() }))
   }
 
   // construct from Sequence
-  convenience init <S: Sequence where S.GeneratorType.Element == T> (sequence: S) {
+  public convenience init <S: SequenceType where S.Generator.Element == T> (sequence: S) {
     self.init(generator: sequence.generate())
   }
 
-  // function for protocol Generator
-  func next () -> T? {
+  // function for protocol GeneratorType
+  public func next () -> T? {
     return self.closure()
   }
 
   // function for protocol Sequence
-  func generate () -> Enumerable<T> {
+  public func generate () -> Enumerable<T> {
     return self
   }
 
   // take first n elements
-  func take (n: Int) -> Enumerable<T> {
+  public func take (n: Int) -> Enumerable<T> {
     var count = n
     return Enumerable<T>(worker:
       ({
@@ -43,7 +43,7 @@ class Enumerable <T> : Generator, Sequence {
   }
 
   // select elements which judge() returns a true
-  func filter (judge: (T) -> Bool) -> Enumerable<T> {
+  public func filter (judge: (T) -> Bool) -> Enumerable<T> {
     return Enumerable<T>(worker:
       ({
         while let x = self.closure() {
@@ -57,7 +57,7 @@ class Enumerable <T> : Generator, Sequence {
   }
 
   // apply mapper() to every element
-  func map<V> (mapper: (T) -> V) -> Enumerable<V> {
+  public func map<V> (mapper: (T) -> V) -> Enumerable<V> {
     return Enumerable<V>(worker:
       ({
         if let x = self.closure() {
@@ -70,9 +70,9 @@ class Enumerable <T> : Generator, Sequence {
   }
 
   // reduce
-  func reduce (operation: (T,T) -> T) -> T! {
+  public func reduce (operation: (T,T) -> T) -> T! {
     var v = self.closure()
-    if v {
+    if v != nil {
       while let x = self.closure() {
         v = operation(v!, x)
       }
@@ -81,7 +81,7 @@ class Enumerable <T> : Generator, Sequence {
   }
 
   // reduce with initital value
-  func reduce<V> (initValue:V, operation: (V,T) -> V) -> V {
+  public func reduce<V> (initValue:V, operation: (V,T) -> V) -> V {
     var v = initValue
     while let x = self.closure() {
       v = operation(v, x)
@@ -89,7 +89,7 @@ class Enumerable <T> : Generator, Sequence {
     return v
   }
 
-  func toArray () -> Array<T> {
+  public func toArray () -> Array<T> {
     var arr = [T]()
     while let x = self.closure() {
       arr.append(x)
@@ -97,13 +97,13 @@ class Enumerable <T> : Generator, Sequence {
     return arr
   }
 
-  func each (body: (T) -> ()) -> () {
+  public func each (body: (T) -> ()) -> () {
     while let x = self.closure() {
       body(x)
     }
   }
 
-  func each_with_index (body: (T, Int) -> ()) -> () {
+  public func each_with_index (body: (T, Int) -> ()) -> () {
     var index: Int = 0
     while let x = self.closure() {
       body(x, index++)

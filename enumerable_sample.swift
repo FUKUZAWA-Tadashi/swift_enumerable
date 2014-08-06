@@ -26,7 +26,7 @@ println(x.filter{$0 % 2 != 0}.map{$0 * 3}.take(10).toArray())
 ** sample of map(), each()
 */
 
-var y = Enumerable(sequence:1...5)
+var y = Enumerable(sequence: 1...5)
 y.map{"'\($0)'"}.each {
   println($0)
 }
@@ -117,7 +117,7 @@ func sieve (list: Enumerable<Int>) -> Enumerable<Int> {
   var remains: Enumerable<Int>!
   return Enumerable<Int> (worker:
     ({
-      if prime {
+      if prime != nil {
         return remains.next()
       } else {
         prime = list.next()
@@ -128,7 +128,7 @@ func sieve (list: Enumerable<Int>) -> Enumerable<Int> {
   )
 }
 
-var primes = sieve(Enumerable(sequence: 2...Int.max))
+var primes = sieve(Enumerable(sequence: 2..<Int.max))
 
 // print first 20 primes
 println(primes.take(20).toArray())

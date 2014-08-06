@@ -11,7 +11,7 @@ RubyのEnumerableの様に、メソッドチェーンを使える。
 
 
 ## Enumerableクラス
-`class Enumerable<T> : Generator, Sequence`
+`class Enumerable<T> : GeneratorType, SequenceType`
 
 Tは要素の型
 
@@ -21,13 +21,13 @@ Tは要素の型
 
  次の入力要素を取得するクロージャを登録。
 
-- `Enumerable<G: Generator where G.Element == T>(generator: G)`
+- `Enumerable<G: GeneratorType where G.Element == T>(generator: G)`
 
  次の入力要素を取得するジェネレータを登録。
 
-- `Enumerable<S: Sequence where S.GeneratorType.Element == T> (sequence: S)`
+- `Enumerable<S: Sequence where S.Generator.Element == T> (sequence: S)`
 
- 次の入力要素を取得するためのSequenceを登録。SequenceからGeneratorを生成して使用する。
+ 次の入力要素を取得するためのシーケンスを登録。Sequenceからジェネレータを生成して使用する。
 
 
 

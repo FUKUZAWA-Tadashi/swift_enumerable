@@ -21,13 +21,14 @@ primes = sieve [2..]
 うまく動きません。
 
 最終的なものを badEnumerable_sieve.swift として置いておきましたが、実行しようとすると
+コンパイルにかなり時間をかけたあげく、
 `Segmentation fault: 11`
 でコンパイラが死んでしまいます。
 
 ちゃんと動作するプログラムにする事は可能なのでしょうか？
 
 
-最終的なEnumerableの実装では、Generatorを使わずclosureにしてみましたが、型システムの呪縛から
+最終的なEnumerableの実装では、GeneratorTypeを使わずclosureにしてみましたが、型システムの呪縛から
 逃れる事が出来て、素数列発生プログラムも(Haskell程ではないにしても)簡潔に書けました。
 
 enumerable_sample.swift の最後に入っています。

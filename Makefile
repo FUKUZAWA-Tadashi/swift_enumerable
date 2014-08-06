@@ -2,7 +2,7 @@
 .PHONY: all clean sample badsample
 .SUFFIXES: .swift .swiftmodule .swiftdoc .o .dylib
 
-SWIFT_LIBPATH = /Applications/Xcode6-Beta3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx
+SWIFT_LIBPATH = /Applications/Xcode6-Beta5.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx
 
 MODULE_SWIFTS	= Enumerable.swift BadEnumerable.swift
 
@@ -18,13 +18,13 @@ all : $(MODULE_SWIFTMODULES) $(MODULE_DYLIBS)
 
 
 .swift.swiftmodule .swift.swiftdoc :
-	swift -module-name $(<:.swift=) -emit-module $<
+	swiftc -module-name $(<:.swift=) -emit-module $<
 
 .swift.o :
-	swift -module-name $(<:.swift=) -emit-object $<
+	swiftc -module-name $(<:.swift=) -emit-object $<
 
 lib%.dylib : %.o
-	libtool -L$(SWIFT_LIBPATH) -dynamic -lswift_stdlib_core -lc -o $@ $<
+	libtool -L$(SWIFT_LIBPATH) -dynamic -lc -o $@ $<
 
 
 clean :
@@ -34,8 +34,8 @@ clean :
 
 
 sample : enumerable_sample.swift Enumerable.swiftmodule libEnumerable.dylib
-	swift -I . -L . -lEnumerable -i enumerable_sample.swift
+	swift -I . -L . -lEnumerable enumerable_sample.swift
 
 badsample : badEnumerable_sieve.swift BadEnumerable.swiftmodule libBadEnumerable.dylib
-	swift -I . -L . -lBadEnumerable -i badEnumerable_sieve.swift
+	swift -I . -L . -lBadEnumerable badEnumerable_sieve.swift
 

@@ -1,9 +1,9 @@
 import BadEnumerable
 
-var x = enumerableFromSequence(1...Int.max)
+var x = enumerableFromSequence(1..<Int.max)
 println(x.filter{$0 % 2 == 0}.map{$0 * 3}.take(5).toArray())
 
-struct BE_SieveGenerator <U: Generator where U.Element == Int> : Generator {
+struct BE_SieveGenerator <U: GeneratorType where U.Element == Int> : GeneratorType {
   var list: U
   var remain: BE_SieveGenerator<BE_FilterGenerator<U>>?
 
